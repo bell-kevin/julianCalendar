@@ -25,14 +25,23 @@ int main()
 	cout << "Enter a number: ";
 	int day;
 	cin >> day;
-	while (day != -1)
+	// input validation loop, if the user enters a number less than -1 or greater than 365, the program will ask for another number
+	while (day < -1 || day > 365 || day ==0)
 	{
-		DayOfYear today(day);
-		today.print();
+		cout << "Invalid number, please enter a number between 1 and 365 (-1 to end): ";
+		cin >> day;
+	}
+	//enter a number between -1 and 365
+	while (day != -1 && day <= 365 && day >=-1)
+	{
+		DayOfYear date(day);
+		date.print();
 		cout << "Enter a number: ";
 		cin >> day;
 	}
 	cout << "Goodbye!\n";
+	system("pause");
+	return 0;
 }
 
 //Create a constructor that takes the day of the year as an argument and stores it in the private member variable
@@ -48,10 +57,27 @@ void DayOfYear::print()
 	while (day > lastDay[month])
 		month++;
 	cout << "That day is " << monthName[month-1] << " " << day - lastDay[month - 1] << endl;
+
 	//ouput the day before
-	cout << "The day before was " << monthName[month - 1] << " " << day - lastDay[month - 1] - 1 << endl;
+	if (day == 1)
+		cout << "The day before is December 31\n";
+	else
+	{
+		month = 0;
+		while (day - 1 > lastDay[month])
+			month++;
+		cout << "The day before is " << monthName[month - 1] << " " << day - 1 - lastDay[month - 1] << endl;
+	}
 	//output the day after
-	cout << "The day after was " << monthName[month - 1] << " " << day - lastDay[month - 1] + 1 << endl;
+	if (day == 365)
+		cout << "The day after is January 1\n";
+	else
+	{
+		month = 0;
+		while (day + 1 > lastDay[month])
+			month++;
+		cout << "The day after is " << monthName[month - 1] << " " << day + 1 - lastDay[month - 1] << endl;
+	}
 	cout << endl;
 }
 
